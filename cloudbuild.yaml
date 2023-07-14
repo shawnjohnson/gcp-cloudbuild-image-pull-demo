@@ -1,0 +1,31 @@
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - pull
+      - 'quay.io/sysdig/agent-kmodule:${_SYSDIG_AGENT_IMAGE_TAG}'
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - tag
+      - 'quay.io/sysdig/agent-kmodule:${_SYSDIG_AGENT_IMAGE_TAG}'
+      - >-
+        ${_LOCATION}-docker.pkg.dev/$PROJECT_ID/sysdig/agent-kmodule:${_SYSDIG_AGENT_IMAGE_TAG}
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - pull
+      - 'quay.io/sysdig/agent-slim:${_SYSDIG_AGENT_IMAGE_TAG}'
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - tag
+      - 'quay.io/sysdig/agent-slim:${_SYSDIG_AGENT_IMAGE_TAG}'
+      - >-
+        ${_LOCATION}-docker.pkg.dev/$PROJECT_ID/sysdig/agent-slim:${_SYSDIG_AGENT_IMAGE_TAG}
+images:
+  - >-
+    ${_LOCATION}-docker.pkg.dev/$PROJECT_ID/sysdig/agent-kmodule:${_SYSDIG_AGENT_IMAGE_TAG}
+  - >-
+    ${_LOCATION}-docker.pkg.dev/$PROJECT_ID/sysdig/agent-slim:${_SYSDIG_AGENT_IMAGE_TAG}
+options:
+  dynamicSubstitutions: true
+substitutions:
+  _LOCATION: us-east4
+  _SYSDIG_AGENT_IMAGE_TAG: 12.15.0
